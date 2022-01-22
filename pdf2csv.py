@@ -131,7 +131,7 @@ def main():
         elif os.path.isdir(f):
             pdfFiles = [fn for fn in os.listdir(f) if '.pdf' in fn]
             for df in pdfFiles:
-                pdf2csv(df, output)
+                pdf2csv(os.path.join(f, df), output)
         else:
             print(f, ': No such file or directory.')
     return
