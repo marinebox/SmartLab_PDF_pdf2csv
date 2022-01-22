@@ -40,6 +40,7 @@ def makeCsv(data, outputName):
 
 
 def pdf2csv(pdfpath: str, outpath: str):
+    print('converting:', pdfpath)
     sub = subprocess.run(
         ['pdf2txt.py', pdfpath],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE
