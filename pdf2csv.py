@@ -2,6 +2,7 @@ import os
 import re
 import argparse
 import subprocess
+from xmlrpc.client import boolean
 import pandas as pd
 
 
@@ -18,7 +19,7 @@ def judgeValue(value: str):
     return ret
 
 
-def makeCsv(data, outputName):
+def makeCsv(data, outputName, zeroPadding: bool):
     # data[0]: degree
     # data[1]: dValue
     # data[2]: intensity
@@ -32,14 +33,16 @@ def makeCsv(data, outputName):
         dx = d[0]
         dy = d[2]
         num = int(dx * 100 + 0.001)
-        rows[num] = [dx, dy]
+        rows[num][1] += dy
     rows.sort()
+    if not zeroPadding:
+        rows = list(filter(lambda x: x[1] != 0, rows))
     df = pd.DataFrame(rows, columns=['two_theta', 'intensity'])
     df.to_csv(outputName, index=False)
     return
 
 
-def pdf2csv(pdfpath: str, outpath: str):
+def pdf2csv(pdfpath: str, outpath: str, zeroPadding: bool):
     print('converting:', pdfpath)
     sub = subprocess.run(
         ['pdf2txt.py', pdfpath],
@@ -98,7 +101,7 @@ def pdf2csv(pdfpath: str, outpath: str):
     for i in range(len(degrees)):
         data.append([degrees[i], dValues[i], intensities[i], hkls[i]])
 
-    makeCsv(data, outputName)
+    makeCsv(data, outputName, zeroPadding)
     return
 
 
@@ -108,6 +111,8 @@ def argParser():
                         help='specify input files or directories.')
     parser.add_argument('-o', '--output', nargs=1,
                         default=None, help='specify output directory.')
+    parser.add_argument('-z', '--zero', action='store_true',
+                        help='no zero padding.')
     args = parser.parse_args()
     return args
 
@@ -116,6 +121,9 @@ def main():
     args = argParser()
     inputs = args.input
     output = None
+    zeroPadding = True
+    if args.zero:
+        zeroPadding = False
     if args.output != None:
         output = args.output[0]
         if not os.path.isdir(output):
@@ -127,11 +135,11 @@ def main():
             if '.pdf' not in f:
                 print(f, 'is not PDF file.')
                 continue
-            pdf2csv(f, output)
+            pdf2csv(f, output, zeroPadding)
         elif os.path.isdir(f):
             pdfFiles = [fn for fn in os.listdir(f) if '.pdf' in fn]
             for df in pdfFiles:
-                pdf2csv(os.path.join(f, df), output)
+                pdf2csv(os.path.join(f, df), output, zeroPadding)
         else:
             print(f, ': No such file or directory.')
     return
