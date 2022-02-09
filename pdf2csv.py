@@ -106,7 +106,7 @@ def pdf2csv(pdfpath: str, outpath: str, zeroPadding: bool):
 
 def argParser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('input', nargs='*', default='.',
+    parser.add_argument('input', nargs='*', default='./',
                         help='specify input files or directories.')
     parser.add_argument('-o', '--output', nargs=1,
                         default=None, help='specify output directory.')
