@@ -3,12 +3,13 @@ import re
 import argparse
 import subprocess
 import pandas as pd
+from sympy import deg
 
 
 def judgeValue(value: str):
     ret = None
     fl = re.compile('[0-9]+\.[0-9]+')
-    hkl = re.compile('[0-9]+\s[0-9]+\s[0-9]')
+    hkl = re.compile('-?[0-9]+\s-?[0-9]+\s-?[0-9]')
     if fl.match(value):
         ret = 'float'
     elif hkl.match(value):
@@ -57,7 +58,7 @@ def pdf2csv(pdfpath: str, outpath: str, zeroPadding: bool):
     outputName = os.path.join(outpath, basenameWoExt + '.csv')
 
     passExpressions = re.compile(
-        '^[0-9]+\.[0-9]+$|^[0-9]+$|^[0-9]+\s[0-9]+\s[0-9]+$')
+        '^[0-9]+\.[0-9]+$|^[0-9]+$|^-?[0-9]+\s-?[0-9]+\s-?[0-9]+$')
     values = sub.stdout.decode('utf-8').split('\n')
     values = filter(lambda x: passExpressions.match(x), values)
     values = list(map(lambda x: [x, judgeValue(x)], values))
@@ -97,6 +98,8 @@ def pdf2csv(pdfpath: str, outpath: str, zeroPadding: bool):
     intensities = list(map(lambda x: float(x[0]), intensities))
     hkls = list(map(lambda x: x[0], hkls))
     data = []
+    print(len(degrees), len(dValues), len(intensities), len(hkls))
+    print(hkls)
     for i in range(len(degrees)):
         data.append([degrees[i], dValues[i], intensities[i], hkls[i]])
 
