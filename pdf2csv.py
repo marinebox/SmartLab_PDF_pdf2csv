@@ -3,7 +3,6 @@ import re
 import argparse
 import subprocess
 import pandas as pd
-from sympy import deg
 
 
 def judgeValue(value: str):
@@ -98,8 +97,6 @@ def pdf2csv(pdfpath: str, outpath: str, zeroPadding: bool):
     intensities = list(map(lambda x: float(x[0]), intensities))
     hkls = list(map(lambda x: x[0], hkls))
     data = []
-    print(len(degrees), len(dValues), len(intensities), len(hkls))
-    print(hkls)
     for i in range(len(degrees)):
         data.append([degrees[i], dValues[i], intensities[i], hkls[i]])
 
