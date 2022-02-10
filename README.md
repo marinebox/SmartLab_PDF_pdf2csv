@@ -1,16 +1,16 @@
 # SL_PDF_pdf2csv
 
-This python program reads the diffraction angles and intensities from a PDF format Powder Diffraction File (PDF) output by Rigaku's SmartLab Studio ii and output these data as a CSV file.
+This python program reads the diffraction angles and diffraction intensities from a PDF format Powder Diffraction File (PDF) which is outputted by Rigaku's SmartLab Studio ii and outputs these data as a CSV file.
 
 ## Description
 
 In the field of material science, X-ray diffraction(XRD) is an important method to determine if the desired crystalline phase is fabricated.
 
-In the laboratory, it is sufficient to able to compare the obtained diffraction pattern with known powder diffraction file(PDF) using the analysis software. On the other hand, when making a XRD chart, it is useful to be able to output powder diffraction data as a numerical file such as CSV.
+In the laboratory, it is sufficient to be able to compare the obtained diffraction pattern with a powder diffraction file(PDF) using the analysis software. On the other hand, when making an XRD chart, it is useful to be able to output powder diffraction data as a numerical file such as CSV.
 
-Rigaku's SmartLab Studio ii is a integrated software to control XRD instrument and analyze diffraction pattern. This software can output powder diffraction file. However, the output format is PDF(portable document file) only, and can not be output in other format such as CSV.
+Rigaku's SmartLab Studio ii is an integrated software to control XRD instruments and analyze diffraction patterns. This software can output powder diffraction files. However, the output format is PDF(portable document file) only, and can not be output in other formats such as CSV.
 
-This program supports material researchers by reads the diffraction angles and intensities from a PDF format Powder Diffraction File (PDF) output by Rigaku's SmartLab Studio ii and output these data as a CSV file.
+This program supports material researchers by reading the diffraction angles and intensities from a PDF format Powder Diffraction File (PDF) which is outputted by Rigaku's SmartLab Studio ii and output these data as a CSV file.
 
 ## Requirements
 
