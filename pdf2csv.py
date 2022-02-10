@@ -7,8 +7,8 @@ import pandas as pd
 
 def judgeValue(value: str):
     ret = None
-    fl = re.compile('[0-9]+\.[0-9]+')
-    hkl = re.compile('-?[0-9]+\s-?[0-9]+\s-?[0-9]')
+    fl = re.compile('\d+\.\d+')
+    hkl = re.compile('-?\d+\s-?\d+\s-?\d')
     if fl.match(value):
         ret = 'float'
     elif hkl.match(value):
@@ -57,7 +57,7 @@ def pdf2csv(pdfpath: str, outpath: str, zeroPadding: bool):
     outputName = os.path.join(outpath, basenameWoExt + '.csv')
 
     passExpressions = re.compile(
-        '^[0-9]+\.[0-9]+$|^[0-9]+$|^-?[0-9]+\s-?[0-9]+\s-?[0-9]+$')
+        '^\d+\.\d+$|^\d+$|^-?\d+\s-?\d+\s-?\d+$')
     values = sub.stdout.decode('utf-8').split('\n')
     values = filter(lambda x: passExpressions.match(x), values)
     values = list(map(lambda x: [x, judgeValue(x)], values))
@@ -126,8 +126,8 @@ def main():
     if args.output != None:
         output = args.output[0]
         if not os.path.isdir(output):
-            print(output, ': No such directory.')
-            return
+            print('output directory is not exist.')
+            exit()
 
     for f in inputs:
         if os.path.isfile(f):
