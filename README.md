@@ -1,4 +1,4 @@
-# SL_PDF_pdf2csv
+# SmartLab_PDF_pdf2csv
 
 This python program reads the diffraction angles and diffraction intensities from a PDF format Powder Diffraction File (PDF) which is outputted by Rigaku's SmartLab Studio ii and outputs these data as a CSV file.
 
